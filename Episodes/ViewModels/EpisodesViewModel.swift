@@ -14,7 +14,7 @@ enum SortStatus {
 protocol EpisodesViewModeling {
     
     var episodes: [Episode] { get set }
-    var cellVieModels: [EpisodeCellViewModel] { get }
+    var cellVieModels: [EpisodeCellViewModeling] { get }
     var errorMessage: String? { get }
     var isLoading: Bool { get }
     
@@ -33,7 +33,7 @@ class EpisodesViewModel: EpisodesViewModeling {
     
     var episodes: [Episode] = []
     
-    var cellVieModels: [EpisodeCellViewModel] = [] {
+    var cellVieModels: [EpisodeCellViewModeling] = [] {
         didSet {
             reloadTableClosure?()
         }

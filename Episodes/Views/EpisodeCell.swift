@@ -17,6 +17,8 @@ class EpisodeCell: UITableViewCell {
     var startTimeLabel: UILabel!
     var endTimeLabel: UILabel!
     
+    var viewModel: EpisodeCellViewModeling?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -25,6 +27,7 @@ class EpisodeCell: UITableViewCell {
     }
     
     func configure(_ viewModel: EpisodeCellViewModeling) {
+        self.viewModel = viewModel
         episodeTitleLabel.text = viewModel.title
         startTimeLabel.text = viewModel.startTime
         endTimeLabel.text = viewModel.endTime

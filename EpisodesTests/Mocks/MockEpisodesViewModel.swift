@@ -12,7 +12,7 @@ class MockEpisodesViewModel: EpisodesViewModeling {
     
     var episodes: [Episode] = []
     
-    var cellVieModels: [EpisodeCellViewModel] = [] {
+    var cellVieModels: [EpisodeCellViewModeling] = [] {
         didSet {
             reloadTableClosure?()
         }

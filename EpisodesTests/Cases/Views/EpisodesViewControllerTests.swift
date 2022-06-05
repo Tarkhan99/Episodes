@@ -60,7 +60,7 @@ class EpisodesViewControllerTests: XCTestCase {
     func test_viewDidLoad_createsPullToRefresh() throws {
         // when
         sut.viewDidLoad()
-
+        
         // then
         let refreshControl = try XCTUnwrap(sut.tableview.refreshControl)
         let target = try XCTUnwrap(refreshControl.allTargets.first as? EpisodesViewController)
@@ -99,7 +99,7 @@ class EpisodesViewControllerTests: XCTestCase {
         let selector = try XCTUnwrap(filterButton.action)
         XCTAssertEqual(selector, #selector(EpisodesViewController.sortEpisodes))
     }
-        
+    
     func test_viewDidLoad_callsViewModelFetchEpisodes() {
         // when
         sut.viewDidLoad()
@@ -121,10 +121,10 @@ class EpisodesViewControllerTests: XCTestCase {
     func test_fetchEpisodes_reloadClosure_reloadsTableView() {
         // given
         class MockTableView: UITableView {
-          var calledReloadData = false
-          override func reloadData() {
-            calledReloadData = true
-          }
+            var calledReloadData = false
+            override func reloadData() {
+                calledReloadData = true
+            }
         }
         
         let mockTableView = MockTableView()
@@ -189,6 +189,27 @@ class EpisodesViewControllerTests: XCTestCase {
         // then
         for cell in cells {
             XCTAssertTrue(cell is EpisodeCell)
+        }
+    }
+    
+    func test_tableViewCellForRowAt_givenViewModelsSet_configuresTableViewCells() throws {
+        // given
+        givenCellViewModels()
+        
+        // when
+        let tableCells: [UITableViewCell] = (0 ..< mockViewModel.cellVieModels.count).map { i in
+            let indexPath = IndexPath(row: i, section: 0)
+            return sut.tableView(sut.tableview, cellForRowAt: indexPath)
+        }
+        let episodeCells = try XCTUnwrap(tableCells as? [EpisodeCell])
+        
+        // then
+        for i in 0 ..< sut.viewModel.cellVieModels.count {
+            let cell = episodeCells[i]
+            let viewModel = sut.viewModel.cellVieModels[i]
+            XCTAssertEqual(cell.episodeTitleLabel.text, viewModel.title)
+            XCTAssertEqual(cell.startTimeLabel.text, viewModel.startTime)
+            XCTAssertEqual(cell.endTimeLabel.text, viewModel.endTime)
         }
     }
     
